@@ -18,7 +18,8 @@ Users can join rooms, send messages, see online users, and receive live updates.
 
 ### 📦 Installation
 ```bash
+
 git clone https://github.com/yourname/socketio-multiroom-chat
 cd socketio-multiroom-chat
-npm install
-npm start
+npm init
+npm i express socket.io moment

@@ -1,0 +1,25 @@
+{
+  "name": "socketio-multiroom-chat",
+  "version": "1.0.0",
+  "description": "Realtime chatapp with rooms",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinawaz/socketio-multiroom-chat.git"
+  },
+  "author": "Shahnawaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/infinawaz/socketio-multiroom-chat/issues"
+  },
+  "homepage": "https://github.com/infinawaz/socketio-multiroom-chat#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "moment": "^2.30.1",
+    "socket.io": "^4.8.1"
+  }
+}
