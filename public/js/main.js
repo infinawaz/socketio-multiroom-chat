@@ -53,15 +53,25 @@ chatForm.addEventListener('submit', (e) => {
 function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
+
+  if (message.username === username) {
+    div.classList.add('me');
+  } else if (message.username === 'ChatCord Bot') {
+    div.classList.add('bot');
+  } else {
+    div.classList.add('other');
+  }
+
   const p = document.createElement('p');
   p.classList.add('meta');
-  p.innerText = message.username;
-  p.innerHTML += `<span>${message.time}</span>`;
+  p.innerHTML = `<span>${message.username}</span> <span>${message.time}</span>`;
   div.appendChild(p);
+
   const para = document.createElement('p');
   para.classList.add('text');
   para.innerText = message.text;
   div.appendChild(para);
+
   document.querySelector('.chat-messages').appendChild(div);
 }
 
@@ -75,16 +85,21 @@ function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user.username;
+    li.innerHTML = `<i class="fas fa-user-circle"></i> ${user.username}`;
     userList.appendChild(li);
   });
 }
 
-//Prompt the user before leave chat room
-document.getElementById('leave-btn').addEventListener('click', () => {
-  const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
-  if (leaveRoom) {
-    window.location = '../index.html';
-  } else {
-  }
-});
+// Prompt the user before leave chat room
+// Note: In new chat.html this is an anchor tag, but we can intercept it if we want custom logic.
+// The existing code looked for 'leave-btn' by ID, but in my new HTML I used 'chat-leave-btn' class.
+// I'll grab it by selector.
+const leaveBtn = document.querySelector('.chat-leave-btn');
+if (leaveBtn) {
+  leaveBtn.addEventListener('click', (e) => {
+    const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
+    if (!leaveRoom) {
+      e.preventDefault();
+    }
+  });
+}
