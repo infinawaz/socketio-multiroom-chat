@@ -68,6 +68,11 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", async (msg) => {
     const user = getCurrentUser(socket.id);
 
+    if (!user) {
+      return socket.emit("message", formatMessage(botName, "Session expired. Please refresh."));
+    }
+
+
     // Save to DB
     const formattedMsg = formatMessage(user.username, msg);
 

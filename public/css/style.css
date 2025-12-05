@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
 
 :root {
-  --primary-color: #6366f1; /* Indigo 500 */
+  --primary-color: #6366f1;
+  /* Indigo 500 */
   --primary-hover: #4f46e5;
-  --secondary-color: #ec4899; /* Pink 500 */
-  --dark-color-a: #0f172a; /* Slate 900 */
-  --dark-color-b: #1e293b; /* Slate 800 */
+  --secondary-color: #ec4899;
+  /* Pink 500 */
+  --dark-color-a: #0f172a;
+  /* Slate 900 */
+  --dark-color-b: #1e293b;
+  /* Slate 800 */
   --light-color: #f8fafc;
   --glass-bg: rgba(30, 41, 59, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
@@ -38,13 +42,16 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
@@ -95,6 +102,8 @@ ul {
   font-size: 2.5rem;
   font-weight: 600;
   background: linear-gradient(to right, #818cf8, #e879f9);
+  background-clip: text;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
@@ -172,6 +181,8 @@ ul {
 .chat-header h1 {
   font-size: 1.5rem;
   background: linear-gradient(to right, #818cf8, #c084fc);
+  background-clip: text;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -216,7 +227,9 @@ ul {
   display: flex;
   align-items: center;
   gap: 8px;
+  gap: 8px;
   font-weight: 500;
+  color: #fff !important;
 }
 
 .chat-sidebar ul li {
@@ -252,8 +265,15 @@ ul {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message .meta {
@@ -346,7 +366,8 @@ ul {
   }
 
   .chat-sidebar {
-    display: none; /* Can implement a toggle for mobile later */
+    display: none;
+    /* Can implement a toggle for mobile later */
   }
 
   .chat-container {
