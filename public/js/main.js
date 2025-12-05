@@ -82,7 +82,7 @@ function outputMessage(message) {
 
 // Add room name to DOM
 function outputRoomName(room) {
-  roomName.innerText = room;
+  roomName.innerText = room || "Unknown Room (Check URL)";
 }
 
 // Add users to DOM
