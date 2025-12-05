@@ -56,7 +56,7 @@ function outputMessage(message) {
 
   if (message.username === username) {
     div.classList.add('me');
-  } else if (message.username === 'ChatCord Bot') {
+  } else if (message.username === 'Raabta Bot') {
     div.classList.add('bot');
   } else {
     div.classList.add('other');
