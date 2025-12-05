@@ -24,20 +24,64 @@
           <input type="text" name="username" id="username" placeholder="Enter username..." required />
         </div>
         <div class="form-control">
-          <label for="room">Room</label>
-          <select name="room" id="room">
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="PHP">PHP</option>
-            <option value="C#">C#</option>
-            <option value="Ruby">Ruby</option>
-            <option value="Java">Java</option>
+          <label for="room">
+            Room
+            <span id="room-mode-toggle" class="room-mode-btn" title="Type custom name"
+              style="cursor: pointer; margin-left:10px; font-size: 0.8em; color: var(--primary-color);">
+              <i class="fas fa-pen"></i> Edit
+            </span>
+          </label>
+
+          <!-- Default Dropdown -->
+          <select name="room" id="room-select">
+            <option value="Lounge">Lounge</option>
+            <option value="Showcase">Showcase</option>
+            <option value="Gaming">Gaming</option>
           </select>
+
+          <!-- Custom Input (Hidden by default) -->
+          <input type="text" id="room-input" placeholder="Enter room name..." style="display: none;" disabled />
         </div>
         <button type="submit" class="btn">Join Chat</button>
       </form>
     </main>
   </div>
+
+  <script>
+    const toggleBtn = document.getElementById('room-mode-toggle');
+    const roomSelect = document.getElementById('room-select');
+    const roomInput = document.getElementById('room-input');
+    let isCustom = false;
+
+    toggleBtn.addEventListener('click', () => {
+      isCustom = !isCustom;
+
+      if (isCustom) {
+        // Switch to Input
+        roomSelect.style.display = 'none';
+        roomSelect.removeAttribute('name'); // Remove name so it's not submitted
+        roomSelect.disabled = true;
+
+        roomInput.style.display = 'block';
+        roomInput.setAttribute('name', 'room'); // Add name so THIS is submitted
+        roomInput.disabled = false;
+        roomInput.focus();
+
+        toggleBtn.innerHTML = '<i class="fas fa-list"></i> List';
+      } else {
+        // Switch back to Select
+        roomInput.style.display = 'none';
+        roomInput.removeAttribute('name');
+        roomInput.disabled = true;
+
+        roomSelect.style.display = 'block';
+        roomSelect.setAttribute('name', 'room');
+        roomSelect.disabled = false;
+
+        toggleBtn.innerHTML = '<i class="fas fa-pen"></i> Edit';
+      }
+    });
+  </script>
 </body>
 
 </html>
