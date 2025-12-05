@@ -3,10 +3,11 @@ const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
 const formatMessage = require("./utils/messages");
-const createAdapter = require("@socket.io/redis-adapter").createAdapter;
-const redis = require("redis");
 require("dotenv").config();
-const { createClient } = redis;
+
+// DB Utils
+const { saveMessage, getRoomMessages } = require("./utils/db");
+
 const {
   userJoin,
   getCurrentUser,
@@ -23,23 +24,30 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const botName = "ChatCord Bot";
 
-(async () => {
-  pubClient = createClient({ url: "redis://127.0.0.1:6379" });
-  await pubClient.connect();
-  subClient = pubClient.duplicate();
-  io.adapter(createAdapter(pubClient, subClient));
-})();
-
 // Run when client connects
 io.on("connection", (socket) => {
-  console.log(io.of("/").adapter);
-  socket.on("joinRoom", ({ username, room }) => {
+  socket.on("joinRoom", async ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);
 
     // Welcome current user
     socket.emit("message", formatMessage(botName, "Welcome to ChatCord!"));
+
+    // Load Chat History
+    try {
+      const messages = await getRoomMessages(user.room);
+      messages.forEach(msg => {
+        // Send stored messages to the user
+        socket.emit("message", {
+          username: msg.username,
+          text: msg.text,
+          time: msg.time
+        });
+      });
+    } catch (err) {
+      console.error("Error loading messages:", err);
+    }
 
     // Broadcast when a user connects
     socket.broadcast
@@ -57,10 +65,19 @@ io.on("connection", (socket) => {
   });
 
   // Listen for chatMessage
-  socket.on("chatMessage", (msg) => {
+  socket.on("chatMessage", async (msg) => {
     const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit("message", formatMessage(user.username, msg));
+    // Save to DB
+    const formattedMsg = formatMessage(user.username, msg);
+
+    try {
+      await saveMessage(user.room, formattedMsg.username, formattedMsg.text, formattedMsg.time);
+    } catch (err) {
+      console.error("Error saving message:", err);
+    }
+
+    io.to(user.room).emit("message", formattedMsg);
   });
 
   // Runs when client disconnects
